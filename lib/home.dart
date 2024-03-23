@@ -45,7 +45,7 @@ class _HomeUIState extends State<HomeUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 232, 147, 176),
+        backgroundColor: Color.fromARGB(246, 225, 220, 252),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

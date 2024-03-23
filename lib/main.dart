@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         
         primaryColor: Color.fromARGB(244, 250, 140, 243),
       ),
-      home: ChooseUI() 
+      home: HomeUI()
       
     );
   }
