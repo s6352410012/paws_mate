@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:paws_mate/account.dart';
-import 'package:paws_mate/choosetype.dart';
-import 'package:paws_mate/forget.dart';
 import 'package:paws_mate/home.dart';
-import 'package:paws_mate/login.dart';
-import 'package:paws_mate/register.dart';
 
 
 void main() {
