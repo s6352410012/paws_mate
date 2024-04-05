@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:paws_mate/home.dart';
+import 'package:paws_mate/navbar.dart';
 import 'package:paws_mate/login.dart';
 
 class RegisterUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(246, 225, 220, 252),
+      backgroundColor: Color.fromARGB(255, 216, 231, 255),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

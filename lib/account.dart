@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:paws_mate/login.dart';
 
-class AccountUI extends StatelessWidget {
+
+class AccountUI extends StatefulWidget {
+  @override
+  _AccountUIState createState() => _AccountUIState();
+}
+
+class _AccountUIState extends State<AccountUI> {
+  final _formKey = GlobalKey<FormState>();
+  late String _name;
+  late String _email;
+  late String _username;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF6F2FC),
+      backgroundColor: Color.fromARGB(255, 216, 231, 255),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        centerTitle: true, // ทำให้โลโก้อยู่ตรงกลาง
-        title: Image.asset(
-            'assets/images/pawsMate logo resize.png'), // เปลี่ยนจาก leading เป็น title
+        centerTitle: true,
+        title: Image.asset('assets/images/pawsMate logo resize.png'),
         actions: [
           IconButton(
             icon: Icon(Icons.account_circle, color: Colors.black),
@@ -23,71 +33,112 @@ class AccountUI extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              'สมัครสมาชิก',
-              style: TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                hintText: 'ชื่อ - นามสกุล*',
-                hintStyle: TextStyle(fontSize: 16.0),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 22),
+              const Text(
+                'Account',
+                style: TextStyle(fontSize: 20),
               ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
+              const SizedBox(height: 8),
+              TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  hintText: 'ชื่อ - นามสกุล*',
+                  hintStyle: TextStyle(fontSize: 16.0),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 ),
-                hintText: 'E - mail',
-                hintStyle: TextStyle(fontSize: 16.0),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                hintText: 'ชื่อผู้ใช้งาน*',
-                hintStyle: TextStyle(fontSize: 16.0),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              ),
-            ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle sign up
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+                onSaved: (value) {
+                  _name = value!;
+                },
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  hintText: 'E - mail',
+                  hintStyle: TextStyle(fontSize: 16.0),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _email = value!;
+                },
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  hintText: 'ชื่อผู้ใช้งาน*',
+                  hintStyle: TextStyle(fontSize: 16.0),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your username';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _username = value!;
+                },
+              ),
+              const Spacer(),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      // Here you can handle the form submission with the saved values
+                      // _name, _email, _username
+                      print('Name: $_name');
+                      print('Email: $_email');
+                      print('Username: $_username');
+
+                      // Navigate to the LoginUI screen
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginUI()),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(246, 253, 137, 42),
+                    padding: EdgeInsets.symmetric(vertical: 1),
+                    shape: StadiumBorder(),
+                  ),
+                  child: Text(
+                    'ลบบัญชี',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
-                child: Text(
-                  'สมัครสมาชิก',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
