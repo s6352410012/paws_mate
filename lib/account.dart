@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paws_mate/login.dart';
 
-
 class AccountUI extends StatefulWidget {
   @override
   _AccountUIState createState() => _AccountUIState();

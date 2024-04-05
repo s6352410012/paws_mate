@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:paws_mate/login.dart';
 
 class HomeUI extends StatefulWidget {
   @override
@@ -7,16 +6,41 @@ class HomeUI extends StatefulWidget {
 }
 
 class _HomeUIState extends State<HomeUI> {
-  // Example data for filters
   final List<String> typeFilters = ['Type 1', 'Type 2', 'Type 3'];
+  final List<String> petFilters = ['Cat', 'Dog', 'Other']; // New filter options
 
-  // Variable to store the selected filter
   String? selectedTypeFilter;
+  String? selectedPetFilter; // Variable to store the selected pet filter
 
-  // Show filter dialog
+  void _showTypeFilterDialog() {
+    _showFilterDialog(
+      filters: typeFilters,
+      selectedFilter: selectedTypeFilter,
+      onSelected: (value) {
+        setState(() {
+          selectedTypeFilter = value;
+        });
+      },
+    );
+  }
+
+  void _showPetFilterDialog() {
+    _showFilterDialog(
+      filters: petFilters,
+      selectedFilter: selectedPetFilter,
+      onSelected: (value) {
+        setState(() {
+          selectedPetFilter = value;
+        });
+      },
+    );
+  }
+
+  // Updated to include an onSelected callback
   void _showFilterDialog({
     required List<String> filters,
     required String? selectedFilter,
+    required void Function(String?) onSelected,
   }) {
     showDialog(
       context: context,
@@ -30,9 +54,7 @@ class _HomeUIState extends State<HomeUI> {
                 value: filter,
                 groupValue: selectedFilter,
                 onChanged: (String? value) {
-                  setState(() {
-                    selectedFilter = value;
-                  });
+                  onSelected(value);
                   Navigator.pop(context);
                 },
               );
@@ -46,58 +68,79 @@ class _HomeUIState extends State<HomeUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // Navigate to the LoginUI screen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginUI()),
-            );
-          },
-        ),
-      ),
+      appBar: AppBar(), // Removed the leading icon
       backgroundColor: Color.fromARGB(255, 216, 231, 255), // Background color
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 10), // Add some space
+            SizedBox(height: 10),
             Image.asset(
-              'assets/images/pawsMate logo resize.png', // Path to the image
-              width: 200, // You can adjust the size
-              height: 100, // You can adjust the size
+              'assets/images/pawsMate logo resize.png',
+              width: 200,
+              height: 100,
             ),
             Container(
-              color: const Color.fromARGB(255, 216, 231, 255),
+              color: Color.fromARGB(255, 216, 231, 255),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize:
+                      MainAxisSize.min, // Make row as wide as the children
+                  mainAxisAlignment: MainAxisAlignment
+                      .start, // Align children to the start of the row
                   children: [
+                    // Existing type filter chip
                     FilterChip(
-                      label: Text('All'),
-                      selected: selectedTypeFilter == null,
-                      onSelected: (value) {
-                        setState(() {
-                          selectedTypeFilter = null;
-                        });
-                      },
-                    ),
-                    FilterChip(
-                      label: Text('Type'),
+                      avatar: Icon(Icons.filter_alt), // Add the icon
+                      label: Text('Filter'),
                       selected: selectedTypeFilter != null,
-                      onSelected: (value) {
-                        _showFilterDialog(
-                          filters: typeFilters,
-                          selectedFilter: selectedTypeFilter,
-                        );
-                      },
+                      onSelected: (_) => _showTypeFilterDialog(),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+
+                    SizedBox(width: 8),
+                    FilterChip(
+                      label: Text('Pet'),
+                      selected: selectedPetFilter != null,
+                      onSelected: (_) => _showPetFilterDialog(),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    FilterChip(
+                      label: Text('Dog'),
+                      selected: selectedPetFilter != null,
+                      onSelected: (_) => _showPetFilterDialog(),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    FilterChip(
+                      label: Text('Cat'),
+                      selected: selectedPetFilter != null,
+                      onSelected: (_) => _showPetFilterDialog(),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    FilterChip(
+                      label: Text('Other'),
+                      selected: selectedPetFilter != null,
+                      onSelected: (_) => _showPetFilterDialog(),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
+
             Expanded(
               child: Center(
                 child: Text('Welcome to Home Page'),
