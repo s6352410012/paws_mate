@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
+
 class HomeUI extends StatefulWidget {
   @override
   _HomeUIState createState() => _HomeUIState();
@@ -68,85 +68,92 @@ class _HomeUIState extends State<HomeUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(), // Removed the leading icon
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 216, 231, 255), // Set app bar color
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications), // Notification icon
+            onPressed: () {
+              // Handle notification icon pressed
+            },
+          ),
+        ],
+      ),
       backgroundColor: Color.fromARGB(255, 216, 231, 255), // Background color
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 10),
-            Image.asset(
-              'assets/images/pawsMate logo resize.png',
-              width: 200,
-              height: 100,
-            ),
-            Container(
-              color: Color.fromARGB(255, 216, 231, 255),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  mainAxisSize:
-                      MainAxisSize.min, // Make row as wide as the children
-                  mainAxisAlignment: MainAxisAlignment
-                      .start, // Align children to the start of the row
-                  children: [
-                    // Existing type filter chip
-                    FilterChip(
-                      avatar: Icon(Icons.filter_alt), // Add the icon
-                      label: Text('Filter'),
-                      selected: selectedTypeFilter != null,
-                      onSelected: (_) => _showTypeFilterDialog(),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 1),
+              Image.asset(
+                'assets/images/pawsMate logo resize.png',
+              ),
+              Container(
+                color: Color.fromARGB(255, 216, 231, 255),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // Existing type filter chip
+                      FilterChip(
+                        avatar: Icon(Icons.filter_alt), // Add the icon
+                        label: Text('Filter'),
+                        selected: selectedTypeFilter != null,
+                        onSelected: (_) => _showTypeFilterDialog(),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-
-                    SizedBox(width: 8),
-                    FilterChip(
-                      label: Text('Pet'),
-                      selected: selectedPetFilter != null,
-                      onSelected: (_) => _showPetFilterDialog(),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                      SizedBox(width: 8),
+                      FilterChip(
+                        label: Text('Pet'),
+                        selected: selectedPetFilter != null,
+                        onSelected: (_) => _showPetFilterDialog(),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    FilterChip(
-                      label: Text('Dog'),
-                      selected: selectedPetFilter != null,
-                      onSelected: (_) => _showPetFilterDialog(),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                      SizedBox(width: 8),
+                      FilterChip(
+                        label: Text('Dog'),
+                        selected: selectedPetFilter != null,
+                        onSelected: (_) => _showPetFilterDialog(),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    FilterChip(
-                      label: Text('Cat'),
-                      selected: selectedPetFilter != null,
-                      onSelected: (_) => _showPetFilterDialog(),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                      SizedBox(width: 8),
+                      FilterChip(
+                        label: Text('Cat'),
+                        selected: selectedPetFilter != null,
+                        onSelected: (_) => _showPetFilterDialog(),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    FilterChip(
-                      label: Text('Other'),
-                      selected: selectedPetFilter != null,
-                      onSelected: (_) => _showPetFilterDialog(),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                      SizedBox(width: 8),
+                      FilterChip(
+                        label: Text('Other'),
+                        selected: selectedPetFilter != null,
+                        onSelected: (_) => _showPetFilterDialog(),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-
-            Expanded(
-              child: Center(
-                child: Text('Welcome to Home Page'),
+              Expanded(
+                child: Center(
+                  child: Text('Welcome to Home Page'),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

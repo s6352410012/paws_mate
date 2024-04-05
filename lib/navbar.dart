@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:paws_mate/account.dart';
-import 'package:paws_mate/login.dart';
 import 'package:paws_mate/home.dart';
 
 class NavbarUI extends StatefulWidget {
-  const NavbarUI({super.key});
+  const NavbarUI({Key? key}) : super(key: key);
 
   @override
   State<NavbarUI> createState() => _NavbarUIState();
@@ -46,17 +45,14 @@ class _NavbarUIState extends State<NavbarUI> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(246, 225, 220, 252),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginUI()),
-            );
-          },
-        ),
         title: Text('someone'),
         actions: [
+          IconButton(
+            icon: Icon(Icons.notifications), // Notification icon
+            onPressed: () {
+              // Handle notification icon pressed
+            },
+          ),
           IconButton(
             icon: Icon(Icons.account_circle),
             onPressed: () {
