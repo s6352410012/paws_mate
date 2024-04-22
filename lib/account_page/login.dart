@@ -1,36 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paws_mate/home.dart';
-import 'package:paws_mate/forget.dart';
+import 'package:paws_mate/account_page/forget.dart';
 import 'package:paws_mate/register.dart';
-
-class Rectangle36 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: 3), // Adjust the height as needed
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: 380,
-              maxHeight: 450,
-            ),
-            child: Container(
-              decoration: ShapeDecoration(
-                color: Color(0xFFD9D9D9),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(39),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 
 class LoginUI extends StatelessWidget {
@@ -40,7 +11,7 @@ class LoginUI extends StatelessWidget {
       backgroundColor: Color.fromARGB(246, 225, 220, 252),
       body: Stack(
         children: [
-          Rectangle36(), // เพิ่ม Rectangle36 เป็นพื้นหลัง
+          //Rectangle36(), // เพิ่ม กรอบครอบพื้นหลังหน้า login ให้เป็นแบบ figma
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
@@ -128,6 +99,7 @@ class LoginUI extends StatelessWidget {
                             style: TextStyle(fontSize: 14),
                           ),
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(235, 252, 151, 252),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40.0),
                             ),
@@ -150,6 +122,7 @@ class LoginUI extends StatelessWidget {
                             style: TextStyle(fontSize: 14),
                           ),
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(123, 204, 255, 228),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40),
                             ),

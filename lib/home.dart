@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:filter_list/filter_list.dart';
+import 'package:badges/badges.dart' as badges;
 
 class HomeUI extends StatefulWidget {
   @override
@@ -6,62 +8,46 @@ class HomeUI extends StatefulWidget {
 }
 
 class _HomeUIState extends State<HomeUI> {
-  final List<String> typeFilters = ['Type 1', 'Type 2', 'Type 3'];
-  final List<String> petFilters = ['Cat', 'Dog', 'Other']; // New filter options
+  final List<String> filters = [
+    'Good with Other Animals',
+    'Good with Kids',
+    'Well-Trained',
+    'Good with Other Dogs',
+    'Small dogs',
+    'Special Needs',
+    'Vaccinated',
+    'Girl',
+    'Boy',
+    'Active',
+    'Long Hair',
+    'Short Hair',
+    'Cat',
+    'Dog',
+    'Other'
+  ];
+  List<String> selectedFilters = [];
 
-  String? selectedTypeFilter;
-  String? selectedPetFilter; // Variable to store the selected pet filter
-
-  void _showTypeFilterDialog() {
-    _showFilterDialog(
-      filters: typeFilters,
-      selectedFilter: selectedTypeFilter,
-      onSelected: (value) {
-        setState(() {
-          selectedTypeFilter = value;
-        });
+  Future<void> _openFilterDialog() async {
+    await FilterListDialog.display<String>(
+      context,
+      hideSelectedTextCount: true,
+      themeData: FilterListThemeData(context),
+      headlineText: 'Select Filters',
+      height: 500,
+      listData: filters,
+      selectedListData: selectedFilters,
+      choiceChipLabel: (item) => item,
+      validateSelectedItem: (list, val) => list!.contains(val),
+      controlButtons: [ControlButtonType.All, ControlButtonType.Reset],
+      onItemSearch: (filter, query) {
+        return filter.toLowerCase().contains(query.toLowerCase());
       },
-    );
-  }
-
-  void _showPetFilterDialog() {
-    _showFilterDialog(
-      filters: petFilters,
-      selectedFilter: selectedPetFilter,
-      onSelected: (value) {
+      onApplyButtonClick: (list) {
         setState(() {
-          selectedPetFilter = value;
+          selectedFilters = List.from(list!);
         });
+        Navigator.pop(context);
       },
-    );
-  }
-
-  // Updated to include an onSelected callback
-  void _showFilterDialog({
-    required List<String> filters,
-    required String? selectedFilter,
-    required void Function(String?) onSelected,
-  }) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Select Filter'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: filters.map((filter) {
-              return RadioListTile<String>(
-                title: Text(filter),
-                value: filter,
-                groupValue: selectedFilter,
-                onChanged: (String? value) {
-                  onSelected(value);
-                  Navigator.pop(context);
-                },
-              );
-            }).toList(),
-          ),
-        ),
-      ),
     );
   }
 
@@ -69,17 +55,17 @@ class _HomeUIState extends State<HomeUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 216, 231, 255), // Set app bar color
+        backgroundColor: Color.fromARGB(255, 216, 231, 255),
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications), // Notification icon
+            icon: Icon(Icons.notifications),
             onPressed: () {
               // Handle notification icon pressed
             },
           ),
         ],
       ),
-      backgroundColor: Color.fromARGB(255, 216, 231, 255), // Background color
+      backgroundColor: Color.fromARGB(255, 216, 231, 255),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
@@ -89,63 +75,93 @@ class _HomeUIState extends State<HomeUI> {
               Image.asset(
                 'assets/images/pawsMate logo resize.png',
               ),
-              Container(
-                color: Color.fromARGB(255, 216, 231, 255),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      // Existing type filter chip
-                      FilterChip(
-                        avatar: Icon(Icons.filter_alt), // Add the icon
-                        label: Text('Filter'),
-                        selected: selectedTypeFilter != null,
-                        onSelected: (_) => _showTypeFilterDialog(),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  badges.Badge(
+                    badgeContent: Text(
+                      selectedFilters.length.toString(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    child: FilterChip(
+                      avatar: Icon(Icons.filter_alt),
+                      label: Text(
+                        'Filters',
+                        style: TextStyle(color: Colors.black),
                         ),
+                      onSelected: (_) => _openFilterDialog(),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                      SizedBox(width: 8),
-                      FilterChip(
-                        label: Text('Pet'),
-                        selected: selectedPetFilter != null,
-                        onSelected: (_) => _showPetFilterDialog(),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      FilterChip(
-                        label: Text('Dog'),
-                        selected: selectedPetFilter != null,
-                        onSelected: (_) => _showPetFilterDialog(),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      FilterChip(
-                        label: Text('Cat'),
-                        selected: selectedPetFilter != null,
-                        onSelected: (_) => _showPetFilterDialog(),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      FilterChip(
-                        label: Text('Other'),
-                        selected: selectedPetFilter != null,
-                        onSelected: (_) => _showPetFilterDialog(),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                    ],
+                      backgroundColor: Color.fromARGB(232, 246, 194, 194),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 8.0),
+                  FilterChip(
+                    label: Text(
+                      'All', 
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onSelected: (value) {
+                      setState(() {
+                        selectedFilters = filters;
+                      });
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    backgroundColor: Color.fromARGB(232, 244, 244, 244),
+                  ),
+                  SizedBox(width: 8.0),
+                  FilterChip(
+                    label: Text(
+                      'Cat',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onSelected: (value) {
+                      setState(() {
+                        selectedFilters = ['Cat'];
+                      });
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    backgroundColor: Color.fromARGB(232, 244, 244, 244),
+                  ),
+                  SizedBox(width: 8.0),
+                  FilterChip(
+                    label: Text(
+                      'Dog',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onSelected: (value) {
+                      setState(() {
+                        selectedFilters = ['Dog'];
+                      });
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    backgroundColor: Color.fromARGB(232, 244, 244, 244),
+                  ),
+                  SizedBox(width: 8.0),
+                  FilterChip(
+                    label: Text(
+                      'Others',
+                      style: TextStyle(color: Colors.black), // Set text color
+                    ),
+                    onSelected: (value) {
+                      setState(() {
+                        selectedFilters = ['Other'];
+                      });
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    backgroundColor: Color.fromARGB(
+                        232, 244, 244, 244), // Set background color
+                  ),
+                ],
               ),
               Expanded(
                 child: Center(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paws_mate/account.dart';
+import 'package:paws_mate/account_page/account.dart';
 import 'package:paws_mate/home.dart';
 
 class NavbarUI extends StatefulWidget {

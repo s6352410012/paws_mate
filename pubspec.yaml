@@ -43,6 +43,10 @@ dependencies:
   flutter_onboarding_slider: ^1.0.11
   salomon_bottom_bar: ^3.3.2
   floating_bottom_navigation_bar: ^1.5.2
+  filter_list: ^1.0.2
+  badges: ^3.1.2
+  flutter_blurhash: ^0.8.2
+  
 
 dev_dependencies:
   flutter_test:
