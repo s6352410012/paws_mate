@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:filter_list/filter_list.dart';
+import 'package:random_color_scheme/random_color_scheme.dart';
 import 'package:badges/badges.dart' as badges;
 
 class HomeUI extends StatefulWidget {

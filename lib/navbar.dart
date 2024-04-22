@@ -62,28 +62,28 @@ class _NavbarUIState extends State<NavbarUI> {
               );
             },
           ),
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              // Handle popup menu item selection
-              print('Selected: $value');
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem<String>(
-                  value: 'option1',
-                  child: Text('Option 1'),
-                ),
-                PopupMenuItem<String>(
-                  value: 'option2',
-                  child: Text('Option 2'),
-                ),
-                PopupMenuItem<String>(
-                  value: 'option3',
-                  child: Text('Option 3'),
-                ),
-              ];
-            },
-          ),
+          // PopupMenuButton<String>(
+          //   onSelected: (value) {
+          //     // Handle popup menu item selection
+          //     print('Selected: $value');
+          //   },
+          //   itemBuilder: (BuildContext context) {
+          //     return [
+          //       PopupMenuItem<String>(
+          //         value: 'option1',
+          //         child: Text('Option 1'),
+          //       ),
+          //       PopupMenuItem<String>(
+          //         value: 'option2',
+          //         child: Text('Option 2'),
+          //       ),
+          //       PopupMenuItem<String>(
+          //         value: 'option3',
+          //         child: Text('Option 3'),
+          //       ),
+          //     ];
+          //   },
+          // ),
         ],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(48.0),
