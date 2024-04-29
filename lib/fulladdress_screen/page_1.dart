@@ -1,125 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 void main() {
-  runApp(FullPageviewUI());
+  runApp(const MyApp());
 }
 
-class FullPageviewUI extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Smooth Page Indicator Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: HomePage(),
-    );
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late int selectedPage;
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    selectedPage = 0;
+    _pageController = PageController(initialPage: selectedPage);
+
+    super.initState();
   }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final controller = PageController(viewportFraction: 0.8, keepPage: true);
 
   @override
   Widget build(BuildContext context) {
-    final pages = [
-      FullAddressUI(),
-      ConfirmAddressUI(),
-      InprocessUI(),
-      PaidUI(),
-      Calendar_UI(),
-    ];
+    const pageCount = 5;
 
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 216, 231, 255),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Container(
-          width: 205,
-          height: 57,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/pawsMate logo resize.png'),
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              controller.previousPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.arrow_forward_ios),
-            onPressed: () {
-              controller.nextPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              );
-            },
-          ),
-        ],
+    return MaterialApp(
+      title: 'Page view dot indicator',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 16),
-              SizedBox(
-                height: 240,
-                child: PageView.builder(
-                  controller: controller,
-                  itemCount: pages.length,
-                  itemBuilder: (_, index) {
-                    return pages[index];
+            children: [
+              Expanded(
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (page) {
+                    setState(() {
+                      selectedPage = page;
+                    });
                   },
+                  children: List.generate(pageCount, (index) {
+                    return Center(
+                      child: Text('Page $index'),
+                    );
+                  }),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 16),
-                child: Text(
-                  'Customizable Effect',
-                  style: TextStyle(color: Colors.black54),
-                ),
-              ),
-              Container(
-                child: SmoothPageIndicator(
-                  controller: controller,
-                  count: pages.length,
-                  effect: CustomizableEffect(
-                    activeDotDecoration: DotDecoration(
-                      width: 32,
-                      height: 12,
-                      color: Colors.indigo,
-                      rotationAngle: 180,
-                      verticalOffset: -10,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    dotDecoration: DotDecoration(
-                      width: 24,
-                      height: 12,
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(16),
-                      verticalOffset: 0,
-                    ),
-                    spacing: 6.0,
-                    inActiveColorOverride: (i) => colors[i],
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: PageViewDotIndicator(
+                  currentItem: selectedPage,
+                  count: pageCount,
+                  unselectedColor: Colors.black26,
+                  selectedColor: Colors.blue,
+                  duration: const Duration(milliseconds: 200),
+                  dotDecoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
                   ),
+                  onDotClicked: (index) {
+                    _pageController.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOut,
+                    );
+                  },
                 ),
               ),
-              const SizedBox(height: 32.0),
+              const SizedBox(
+                height: 16,
+              ),
             ],
           ),
         ),
@@ -127,47 +85,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-class FullAddressUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(child: Text("Full Address UI"));
-  }
-}
-
-class ConfirmAddressUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(child: Text("Confirm Address UI"));
-  }
-}
-
-class InprocessUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(child: Text("Inprocess UI"));
-  }
-}
-
-class PaidUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(child: Text("Paid UI"));
-  }
-}
-
-class Calendar_UI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(child: Text("Calendar UI"));
-  }
-}
-
-final colors = const [
-  Colors.red,
-  Colors.green,
-  Colors.greenAccent,
-  Colors.amberAccent,
-  Colors.blue,
-  Colors.amber,
-];
