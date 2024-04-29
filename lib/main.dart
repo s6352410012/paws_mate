@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:paws_mate/account_page/forget.dart';
 import 'package:paws_mate/fulladdress_screen/fulldetail.dart';
 import 'package:paws_mate/contract.dart';
 import 'package:paws_mate/fulladdress_screen/page_1.dart';
+import 'package:paws_mate/fulladdress_screen/page_3.dart';
 import 'package:paws_mate/home.dart';
-
 import 'account_page/login.dart';
 
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Color.fromARGB(244, 250, 140, 243),
       ),
 
-      home: MyApp(),
+      home: FullPageviewUI(),
 
     );
   }
