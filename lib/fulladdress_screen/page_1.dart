@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                     dotBorder: DotBorder(
                       padding: 2,
                       width: 2,
-                      color: Colors.indigo,
+                      color: Colors.yellowAccent,
                     ),
                   ),
                   dotDecoration: DotDecoration(
