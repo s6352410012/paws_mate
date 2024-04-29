@@ -299,6 +299,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  page_view_dot_indicator:
+    dependency: "direct main"
+    description:
+      name: page_view_dot_indicator
+      sha256: "32d73b9de221339a371a229f547eb9cbb6f8114b8770e76a104fb4c30e39cf22"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   path:
     dependency: transitive
     description:
@@ -352,6 +360,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smooth_page_indicator:
+    dependency: "direct main"
+    description:
+      name: smooth_page_indicator
+      sha256: "725bc638d5e79df0c84658e1291449996943f93bacbc2cec49963dbbab48d8ae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   source_span:
     dependency: transitive
     description:
@@ -458,4 +474,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.3.0 <4.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=3.3.0"

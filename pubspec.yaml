@@ -48,6 +48,8 @@ dependencies:
   flutter_blurhash: ^0.8.2
   random_color_scheme: ^0.1.4
   banner_carousel: ^1.2.1
+  page_view_dot_indicator: ^2.3.0
+  smooth_page_indicator: ^1.1.0
   
 
 dev_dependencies:
