@@ -1,83 +1,116 @@
 import 'package:flutter/material.dart';
-import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(FullPageviewUI());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+class FullPageviewUI extends StatelessWidget {
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  late int selectedPage;
-  late final PageController _pageController;
-
-  @override
-  void initState() {
-    selectedPage = 0;
-    _pageController = PageController(initialPage: selectedPage);
-
-    super.initState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Smooth Page Indicator Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: HomePage(),
+    );
   }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final controller = PageController(
+    viewportFraction: 0.8, // กำหนดความกว้างของหน้าจอที่จะแสดงเนื้อหาในแต่ละครั้ง
+    keepPage: true,
+  );
 
   @override
   Widget build(BuildContext context) {
-    const pageCount = 5;
+    final pages = [
+      FullAddressUI(),
+      ConfirmAddressUI(),
+      InprocessUI(),
+      PaidUI(),
+      Calendar_UI(),
+    ];
 
-    return MaterialApp(
-      title: 'Page view dot indicator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 216, 231, 255),
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
-            children: [
-              Expanded(
-                child: PageView(
-                  controller: _pageController,
-                  onPageChanged: (page) {
-                    setState(() {
-                      selectedPage = page;
-                    });
-                  },
-                  children: List.generate(pageCount, (index) {
-                    return Center(
-                      child: Text('Page $index'),
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30, 50, 1, 20),
+                child: Container(
+                  width: 304,
+                  height: 81,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/pawsMate logo resize.png'),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              SizedBox(
+                height: 600,
+                child: PageView.builder(
+                  controller: controller,
+                  itemCount: pages.length,
+                  itemBuilder: (_, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          colors: [
+                            Color.fromRGBO(223, 228, 252, 1), // สีเริ่มต้น
+                            Color.fromARGB(255, 248, 192, 254), // สีสุดท้าย
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(20), // เพิ่ม radius
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0), // เพิ่มการเว้นระหว่างกรอบ
+                        child: pages[index],
+                      ),
                     );
-                  }),
+                  },
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: PageViewDotIndicator(
-                  currentItem: selectedPage,
-                  count: pageCount,
-                  unselectedColor: Colors.black26,
-                  selectedColor: Colors.blue,
-                  duration: const Duration(milliseconds: 200),
-                  dotDecoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
+                padding: const EdgeInsets.only(top: 16, bottom: 16),
+              ),
+              Container(
+                child: SmoothPageIndicator(
+                  controller: controller,
+                  count: pages.length,
+                  effect: CustomizableEffect(
+                    activeDotDecoration: DotDecoration(
+                      width: 32,
+                      height: 12,
+                      color: Colors.indigo,
+                      rotationAngle: 180,
+                      verticalOffset: -10,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    dotDecoration: DotDecoration(
+                      width: 24,
+                      height: 12,
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(16),
+                      verticalOffset: 0,
+                    ),
+                    spacing: 6.0,
+                    inActiveColorOverride: (i) => colors[i],
                   ),
-                  onDotClicked: (index) {
-                    _pageController.animateToPage(
-                      index,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut,
-                    );
-                  },
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 32.0),
             ],
           ),
         ),
@@ -85,3 +118,72 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+class FullAddressUI extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text("ที่อยู่ปัจจุบัน/สถานที่สำหรับเลี้ยง"),
+      ),
+    );
+  }
+}
+
+class ConfirmAddressUI extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text("รอการพิจารณา"),
+      ),
+    );
+  }
+}
+
+class InprocessUI extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text("ชำระค่าธรรมเนียมการรับเลี้ยง"),
+      ),
+    );
+  }
+}
+
+class PaidUI extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text("Congratulations!"),
+      ),
+    );
+  }
+}
+
+class Calendar_UI extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text("โปรดเลือกวันที่พร้อมรับเลี้ยง"),
+      ),
+    );
+  }
+}
+
+final colors = const [
+  Colors.red,
+  Colors.green,
+  Colors.greenAccent,
+  Colors.amberAccent,
+  Colors.blue,
+  Colors.amber,
+];

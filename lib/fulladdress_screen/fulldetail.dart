@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paws_mate/home.dart';
-import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
-
 
 void main() {
   runApp(FulldetailUI());
