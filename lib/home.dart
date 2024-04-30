@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:filter_list/filter_list.dart';
-import 'package:random_color_scheme/random_color_scheme.dart';
+import 'package:random_color/random_color.dart';
 import 'package:badges/badges.dart' as badges;
+
+RandomColor _randomColor = RandomColor();
 
 class HomeUI extends StatefulWidget {
   @override
@@ -89,7 +91,7 @@ class _HomeUIState extends State<HomeUI> {
                       label: Text(
                         'Filters',
                         style: TextStyle(color: Colors.black),
-                        ),
+                      ),
                       onSelected: (_) => _openFilterDialog(),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -100,7 +102,7 @@ class _HomeUIState extends State<HomeUI> {
                   SizedBox(width: 8.0),
                   FilterChip(
                     label: Text(
-                      'All', 
+                      'All',
                       style: TextStyle(color: Colors.black),
                     ),
                     onSelected: (value) {
@@ -149,7 +151,7 @@ class _HomeUIState extends State<HomeUI> {
                   FilterChip(
                     label: Text(
                       'Others',
-                      style: TextStyle(color: Colors.black), // Set text color
+                      style: TextStyle(color: Colors.black),
                     ),
                     onSelected: (value) {
                       setState(() {
@@ -159,14 +161,20 @@ class _HomeUIState extends State<HomeUI> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    backgroundColor: Color.fromARGB(
-                        232, 244, 244, 244), // Set background color
+                    backgroundColor: Color.fromARGB(232, 244, 244, 244),
                   ),
                 ],
               ),
               Expanded(
-                child: Center(
-                  child: Text('Welcome to Home Page'),
+                child: GridView.count(
+                  crossAxisCount: 1,
+                  childAspectRatio: 2.56,
+                  children: [
+                    _buildImageFrame('assets/images/dognopng1.png'),
+                    _buildImageFrame('assets/images/catnobg.png'),
+                    _buildImageFrame('assets/images/rabbitnobg.png'),
+                    _buildImageFrame('assets/images/dognobg.png'),
+                  ],
                 ),
               ),
             ],
@@ -175,4 +183,49 @@ class _HomeUIState extends State<HomeUI> {
       ),
     );
   }
+
+  Widget _buildImageFrame(String imagePath) {
+    return Padding(
+      padding: EdgeInsets.all(8.0), // Add padding around each frame
+      child: Container(
+        width: 150,
+        height: 50,
+        decoration: BoxDecoration(
+          color: _randomColor.randomColor(
+            colorSaturation: ColorSaturation.lowSaturation,
+            colorBrightness: ColorBrightness.light,
+          ),
+          borderRadius: BorderRadius.circular(40.0), // Outer border radius
+        ),
+        child: Center(
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 500), // Animation duration
+            curve: Curves.easeInOut, // Animation curve
+            transform: Matrix4.translationValues(selectedFilters.isNotEmpty ? 200 : -70, 0, -70), // Move to the left if filters are selected
+            child: Container(
+              width: 193,
+              height: 139,
+              decoration: BoxDecoration(
+                color: _randomColor.randomColor(
+                  colorSaturation: ColorSaturation.lowSaturation,
+                  colorBrightness: ColorBrightness.light,
+                ),
+                borderRadius: BorderRadius.circular(60.0), // Inner border radius
+              ),
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: HomeUI(),
+  ));
 }

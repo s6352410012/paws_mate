@@ -23,14 +23,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = PageController(
-    viewportFraction: 0.8, // กำหนดความกว้างของหน้าจอที่จะแสดงเนื้อหาในแต่ละครั้ง
+    viewportFraction: 0.8,
     keepPage: true,
   );
+
+  final double pageSpacing = 20.0;
 
   @override
   Widget build(BuildContext context) {
     final pages = [
-      FullAddressUI(),
+      AddressUI(),
       ConfirmAddressUI(),
       InprocessUI(),
       PaidUI(),
@@ -44,19 +46,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 50, 1, 20),
-                child: Container(
-                  width: 304,
-                  height: 81,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/pawsMate logo resize.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
+              AddressHeader(),
               SizedBox(height: 10),
               SizedBox(
                 height: 600,
@@ -64,19 +54,22 @@ class _HomePageState extends State<HomePage> {
                   controller: controller,
                   itemCount: pages.length,
                   itemBuilder: (_, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        gradient: RadialGradient(
-                          colors: [
-                            Color.fromRGBO(223, 228, 252, 1), // สีเริ่มต้น
-                            Color.fromARGB(255, 248, 192, 254), // สีสุดท้าย
-                          ],
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: pageSpacing),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: [
+                              Color.fromRGBO(223, 228, 252, 1),
+                              Color.fromARGB(255, 248, 192, 254),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        borderRadius: BorderRadius.circular(20), // เพิ่ม radius
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0), // เพิ่มการเว้นระหว่างกรอบ
-                        child: pages[index],
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: pages[index],
+                        ),
                       ),
                     );
                   },
@@ -84,8 +77,6 @@ class _HomePageState extends State<HomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16, bottom: 16),
-              ),
-              Container(
                 child: SmoothPageIndicator(
                   controller: controller,
                   count: pages.length,
@@ -119,7 +110,26 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class FullAddressUI extends StatelessWidget {
+class AddressHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(30, 50, 1, 20),
+      child: Container(
+        width: 304,
+        height: 81,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/pawsMate logo resize.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddressUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

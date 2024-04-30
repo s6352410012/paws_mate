@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:paws_mate/fulladdress_screen/page_1.dart';
-import 'package:paws_mate/fulladdress_screen/page_2.dart';
+import 'package:paws_mate/home.dart';
+
 
 
 
 void main() {
   runApp(MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Color.fromARGB(244, 250, 140, 243),
       ),
 
-      home: AddressUI(),
+      home: HomeUI(),
 
     );
   }
